@@ -3,11 +3,9 @@
 u"""
 HMM勉強用モジュール
 
-作業毎に関数化することでできるだけわかりやすく書いた（つもり）
-
 requirements
 * python 3.6
-* numpy anything
+* numpy 1.12.1 
 * hmmlearn 0.2.0
 """
 from hmmlearn import hmm
@@ -47,6 +45,7 @@ def def_param():
         '雨': {'散歩':0.1, '買い物':0.4, '掃除':0.5},
         '晴れ': {'散歩':0.6, '買い物':0.3, '掃除':0.1},
     }
+    #状態、出力記号、初期状態確率、状態遷移確率、出力確率の順に値を返す
     return states,observations,s,t,e
 
 def make_hmm(states,observations,s,t,e):
@@ -86,15 +85,18 @@ def make_hmm(states,observations,s,t,e):
                      ])
 
     # モデルにパラメータを設定
-    model.startprob_ = start
-    model.transmat_ = trans
-    model.emissionprob_ = emiss
+    model.startprob_ = start # 初期状態確率
+    model.transmat_ = trans # 状態遷移確率
+    model.emissionprob_ = emiss # 出力確率
 
-    return model
+    return model # 生成したモデルを返す
 
 def make_sample(model,states,observations):
     u"""
     HMMからサンプルデータを出力する
+
+    HMMを動かして,ある状態遷移が行われた時の
+    観測系列と状態遷移系列を得る
     
     ______________________________________________
     引数          (type) :content
@@ -125,6 +127,8 @@ def Predict(model, X1,Z1):
     u"""
     復号問題を解いて最尤状態遷移系列を求める.
     
+    ビタビアルゴリズムを用いて,観測系列を元に
+    最尤状態遷移系列を推定する.
     ______________________________________________
     引数          (type) :content
     ______________________________________________
@@ -150,11 +154,12 @@ def Predict(model, X1,Z1):
     print("予測した天気の正解数は{0}個中、{1}個でした。\n".format(len(Z1),ans_cnt))
     print(type(X1),type(Z1))
 
-
 def Estimate(model,X1,Z1):
     u"""
-    パラメータの推定を行う。
+    HMMのパラメータの推定を行う。
 
+    バウムウェルチアルゴリズムを用いて,未知のHMMから
+    出力された観測系列を元に,HMMの各パラメータを推定する.
     ______________________________________________
     引数          (type) :content
     ______________________________________________
@@ -193,4 +198,3 @@ if __name__ == "__main__":
     X1,Z1 = make_sample(model,states,observations)
     Predict(model,X1,Z1)
     Estimate(model,X1,Z1)
-
