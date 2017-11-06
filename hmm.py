@@ -11,6 +11,9 @@ requirements
 from hmmlearn import hmm
 import numpy as np
 
+#サンプル出力の数
+SAMPLE = 10
+
 def def_param():
     u"""
     HMMのパラメータを設定
@@ -114,7 +117,7 @@ def make_sample(model,states,observations):
     """
     # サンプルデータの出力
     # X = 観測系列、Z = 観測系列がXの時の状態系列
-    X1,Z1 = model.sample(10) 
+    X1,Z1 = model.sample(SAMPLE) 
 
     print("サンプルデータを出力します。")
     for x in range(len(X1)):
@@ -179,7 +182,7 @@ def Estimate(model,X1,Z1):
     # この時、X1はmodelからの出力だが,"未知"のモデルから出力されたものと仮定して学習する
     remodel.fit(X1)
     # 学習済みのremodelからサンプルデータを出力
-    X2,Z2 = remodel.sample(10)
+    X2,Z2 = remodel.sample(SAMPLE)
 
     print("パラメータ推定を行ったモデルからサンプルを出力します。")
     for x in range(len(X1)):
