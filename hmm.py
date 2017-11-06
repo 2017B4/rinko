@@ -120,7 +120,7 @@ def make_sample(model,states,observations):
     for x in range(len(X1)):
         print("{0}日目の天気は'{1}'で、ボブは'{2}'をしていました。".format(x+1,states[Z1[x]], observations[X1[x][0]]))
 
-    print("この時のボブの行動の尤度：{0:10f}\n".format(np.exp(model.score(X1))))
+    print("この時のボブの行動の尤度：{0:10f}%\n".format(np.exp(model.score(X1))*100))
     return X1,Z1
 
 def Predict(model, X1,Z1):
@@ -152,7 +152,6 @@ def Predict(model, X1,Z1):
             ans_cnt = ans_cnt+1
     
     print("予測した天気の正解数は{0}個中、{1}個でした。\n".format(len(Z1),ans_cnt))
-    print(type(X1),type(Z1))
 
 def Estimate(model,X1,Z1):
     u"""
@@ -186,10 +185,6 @@ def Estimate(model,X1,Z1):
     for x in range(len(X1)):
         print("{0}日目の天気は'{1}'で、ボブは'{2}'をしていました。".format(x+1,states[Z2[x]], observations[X2[x][0]]))
     
-    #要検証部分なのでスルーしてください
-    #print("元のモデルとパラメータ推定したモデルの出力結果を比較します。")
-    #print("観測系列の一致数は{0}個中{1}個でした。".format(len(X1),len([x for x in range(len(X1)) if X1[x] == X2[x]])))
-    #print("状態推移の一致数は{0}個中{1}個でした。".format(len(Z1),len([x for x in range(len(Z1)) if Z1[x] == Z2[x]])))
 if __name__ == "__main__":
     # hmmのパラメータを取得
     states,observations,s,t,e = def_param()
