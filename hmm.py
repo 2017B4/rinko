@@ -37,6 +37,8 @@ def def_param():
     states = ('雨', '晴れ') # 状態の定義
     observations = ('散歩','買い物','掃除') # ボブの行動の定義
 
+    print("状態集合：{}".format(states))
+    print("出力記号集合:{}\n".format(observations))
     s = {'雨':0.6, '晴れ':0.4} # 初期状態確率
 
     t = { # 各状態における状態遷移確率
@@ -119,7 +121,7 @@ def make_sample(model,states,observations):
     # X = 観測系列、Z = 観測系列がXの時の状態系列
     X1,Z1 = model.sample(SAMPLE) 
 
-    print("サンプルデータを出力します。")
+    print("modelからサンプルデータを出力します。")
     for x in range(len(X1)):
         print("{0}日目の天気は'{1}'で、ボブは'{2}'をしていました。".format(x+1,states[Z1[x]], observations[X1[x][0]]))
 
@@ -147,7 +149,8 @@ def Predict(model, X1,Z1):
     """
     Pre_Z1 = model.predict(X1) # model.predictメソッドに観測系列X1を渡して状態系列を最尤推定
 
-    print("復号結果を表示します")
+    print("サンプルの観測系列からmodelにおける最尤状態遷移系列を復号します")
+    print("{:*^10}".format("復号結果"))
     ans_cnt = 0
     for x in range(len(X1)):
         print("{0}日目,ボブは{1}をしており、天気は'{2}'と予測しました。".format(x+1, observations[X1[x][0]],states[Pre_Z1[x]]))
@@ -181,12 +184,15 @@ def Estimate(model,X1,Z1):
        
     # fitメソッドに観測系列を渡してパラメータを推定
     # modelから10000日分の出力を観測系列として学習する
+    print("modelからの出力10000日分の観測系列をremodelで学習します")
     remodel.fit(model.sample(10000)[0])
     # 学習済みのremodelに関して
     #サンプルデータの観測系列から最尤状態遷移を復号する
     Pre_Z1=remodel.predict(X1)
 
     ans_cnt=0
+    print("modelのサンプルからremodelにおける最尤状態遷移系列を復号します")
+    print("{:*^10}".format("復号結果"))
     for x in range(len(X1)):
         print("{0}日目,ボブは{1}をしており、天気は'{2}'と予測しました。".format(x+1, observations[X1[x][0]],states[Pre_Z1[x]]))
         if Z1[x] == Pre_Z1[x]: # 元の状態系列と、最尤推定した状態系列の一致数を求める
