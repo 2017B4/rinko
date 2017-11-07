@@ -177,16 +177,22 @@ def Estimate(model,X1,Z1):
     """
     # HMMのインスタンスを生成
     # n_iter は推定を行う演算のイテレーションの回数
-    remodel = hmm.MultinomialHMM(n_components=2,n_iter=10000)
+    remodel = hmm.MultinomialHMM(n_components=2,n_iter=10)
+       
     # fitメソッドに観測系列を渡してパラメータを推定
-    # この時、X1はmodelからの出力だが,"未知"のモデルから出力されたものと仮定して学習する
-    remodel.fit(X1)
-    # 学習済みのremodelからサンプルデータを出力
-    X2,Z2 = remodel.sample(SAMPLE)
+    # modelから10000日分の出力を観測系列として学習する
+    remodel.fit(model.sample(10000)[0])
+    # 学習済みのremodelに関して
+    #サンプルデータの観測系列から最尤状態遷移を復号する
+    Pre_Z1=remodel.predict(X1)
 
-    print("パラメータ推定を行ったモデルからサンプルを出力します。")
+    ans_cnt=0
     for x in range(len(X1)):
-        print("{0}日目の天気は'{1}'で、ボブは'{2}'をしていました。".format(x+1,states[Z2[x]], observations[X2[x][0]]))
+        print("{0}日目,ボブは{1}をしており、天気は'{2}'と予測しました。".format(x+1, observations[X1[x][0]],states[Pre_Z1[x]]))
+        if Z1[x] == Pre_Z1[x]: # 元の状態系列と、最尤推定した状態系列の一致数を求める
+            ans_cnt = ans_cnt+1
+    
+    print("予測した天気の正解数は{0}個中、{1}個でした。\n".format(len(Z1),ans_cnt))
 
     return remodel    
 def show_param(remodel, s,t,e):
