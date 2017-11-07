@@ -187,12 +187,62 @@ def Estimate(model,X1,Z1):
     print("パラメータ推定を行ったモデルからサンプルを出力します。")
     for x in range(len(X1)):
         print("{0}日目の天気は'{1}'で、ボブは'{2}'をしていました。".format(x+1,states[Z2[x]], observations[X2[x][0]]))
+
+    return remodel    
+def show_param(remodel, s,t,e):
+    u"""
+    HMMのパラメータを表示する。
+
+    自分でパラメータを定義したmodelのパラメータを表示した後、
+    Estimateによって推定したモデルのパラメータを表示する。
+    ______________________________________________
+    引数          (type) :content
+    ______________________________________________
+    |remodel      (class):パラメータ推定したHMMのインスタンス
+    |s            (dic)  :startprob_（初期状態確率）
+    |t            (dic)  :transmat_(状態遷移確率)
+    |e            (dic)  :emissionprob_(出力確率)
+    ______________________________________________
+
+    ______________________________________________
+    返り値       (type) :content
+    ______________________________________________
+    |なし
+    """
+
+    print("元のモデルのパラメータを表示します")
+    print("初期状態確率:{},\n状態遷移確率:{},\n出力確率:{}\n".format(s,t,e))
     
+    # remodelの初期状態確率、状態遷移確率、出力確率を表示する
+    # formatは桁数の調整
+    s['雨'] = format(remodel.startprob_[0], '.2f')
+    s['晴れ'] = format(remodel.startprob_[1], '.2f')
+    
+    t['雨']['雨'] = format(remodel.transmat_[0][0], '.2f')
+    t['雨']['晴れ'] = format(remodel.transmat_[0][1], '.2f')
+    t['晴れ']['雨'] = format(remodel.transmat_[1][0], '.2f')
+    t['晴れ']['晴れ']= format(remodel.transmat_[1][1], '.2f')
+
+    e['雨']['散歩']=format(remodel.emissionprob_[0][0], '.2f') 
+    e['雨']['買い物']=format(remodel.emissionprob_[0][1], '.2f')
+    e['雨']['掃除']=format(remodel.emissionprob_[0][2], '.2f')
+    e['晴れ']['散歩']=format(remodel.emissionprob_[1][0], '.2f') 
+    e['晴れ']['買い物']=format(remodel.emissionprob_[1][1], '.2f')
+    e['晴れ']['掃除']=format(remodel.emissionprob_[1][2], '.2f')
+    
+    print("推定したモデルのパラメータを表示します")
+    print("初期状態確率:{},\n状態遷移確率:{},\n出力確率:{}".format(s,t,e))
+
 if __name__ == "__main__":
     # hmmのパラメータを取得
     states,observations,s,t,e = def_param()
     # HMMのインスタンスを生成
     model = make_hmm(states,observations,s,t,e)
+    # modelからサンプルデータを得る
     X1,Z1 = make_sample(model,states,observations)
+    # modelとサンプルデータから復号問題を解く
     Predict(model,X1,Z1)
-    Estimate(model,X1,Z1)
+    # modelから得た観測系列を元にremodelのパラメータを推定する
+    remodel = Estimate(model,X1,Z1)
+    # model,remodelのパラメータを表示する
+    show_param(remodel,s,t,e)
