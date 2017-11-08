@@ -9,9 +9,9 @@ hmm勉強用プロジェクト
 
 ## Usage
 * サンプルの結果表示
-'$ python hmm.py'
-* 課題用プログラムについて
-'kadai.py ４２〜５５行目の各パラメータに数値を入力'
-'$ python kadai.py'
+`$ python hmm.py`
+* 課題用プログラムについて`kadai.py ４２〜５５行目の各パラメータに数値を入力
+`$ python kadai.py`
+
 ## Author
 Funasaka Kuniyuki
