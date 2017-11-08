@@ -8,9 +8,10 @@ hmm勉強用プロジェクト
 * hmmlearn 0.2.0
 
 ## Usage
-* サンプルの結果表示
+* サンプルの結果表示  
 `$ python hmm.py`
-* 課題用プログラムについて`kadai.py ４２〜５５行目の各パラメータに数値を入力
+* 課題用プログラムについて  
+kadai.py ４２〜５５行目の各パラメータに数値を入力
 `$ python kadai.py`
 
 ## Author
