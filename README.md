@@ -11,7 +11,7 @@ hmm勉強用プロジェクト
 * サンプルの結果表示  
 `$ python hmm.py`
 * 課題用プログラムについて  
-kadai.py ４２〜５５行目の各パラメータに数値を入力
+kadai.py ４２〜５５行目の各パラメータに数値を入力  
 `$ python kadai.py`
 
 ## Author
