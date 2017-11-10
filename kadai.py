@@ -186,9 +186,13 @@ def Estimate(model,X1,Z1):
     remodel = hmm.MultinomialHMM(n_components=2,n_iter=10)
        
     # fitメソッドに観測系列を渡してパラメータを推定
+
     # modelから10000日分の出力を観測系列として学習する
-    print("modelからの出力10000日分の観測系列をremodelで学習します")
+    #print("modelからの出力10000日分の観測系列をremodelで学習します")
+    print("統計情報の観測系列からremodelを学習します")
     remodel.fit(model.sample(10000)[0])
+    #remodelに入れる観測系列が決まったら更新すること
+
     # 学習済みのremodelに関して
     #サンプルデータの観測系列から最尤状態遷移を復号する
     Pre_Z1=remodel.predict(X1)
