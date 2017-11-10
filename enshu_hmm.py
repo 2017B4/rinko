@@ -37,6 +37,9 @@ def def_param():
     states = ('雨', '晴れ') # 状態の定義
     observations = ('散歩','買い物','掃除') # ボブの行動の定義
 
+    print("状態集合：{}".format(states))
+    print("出力記号集合:{}\n".format(observations))
+
     s = {'雨':0.6, '晴れ':0.4} # 初期状態確率
 
     t = { # 各状態における状態遷移確率
@@ -222,7 +225,6 @@ def show_param(remodel, s,t,e):
 
     print("元のモデルのパラメータを表示します")
     print("初期状態確率:{},\n状態遷移確率:{},\n出力確率:{}\n".format(s,t,e))
-    
     # remodelの初期状態確率、状態遷移確率、出力確率を表示する
     # formatは桁数の調整
     s['雨'] = format(remodel.startprob_[0], '.2f')
