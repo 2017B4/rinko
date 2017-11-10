@@ -37,8 +37,6 @@ def def_param():
     states = ('雨', '晴れ') # 状態の定義
     observations = ('散歩','買い物','掃除') # ボブの行動の定義
 
-    print("状態集合：{}".format(states))
-    print("出力記号集合:{}\n".format(observations))
     s = {'雨':0.6, '晴れ':0.4} # 初期状態確率
 
     t = { # 各状態における状態遷移確率
