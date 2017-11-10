@@ -13,6 +13,9 @@ hmm勉強用プロジェクト
 * 課題用プログラムについて  
 kadai.py ４２〜５５行目の各パラメータに数値を入力  
 `$ python kadai.py`
+* 評価問題によるモデル識別  
+`$ python identification.py`
 
 ## Author
 Funasaka Kuniyuki
+
