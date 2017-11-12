@@ -122,6 +122,7 @@ def make_sample(model,states,observations):
     # X = 観測系列、Z = 観測系列がXの時の状態系列
     X1,Z1 = model.sample(SAMPLE) 
 
+    print("make_sampleの出力")
     print("modelからサンプルデータを出力します。")
     for x in range(len(X1)):
         print("{0}日目の天気は'{1}'で、ボブは'{2}'をしていました。".format(x+1,states[Z1[x]], observations[X1[x][0]]))
@@ -150,6 +151,7 @@ def Predict(model, X1,Z1):
     """
     Pre_Z1 = model.predict(X1) # model.predictメソッドに観測系列X1を渡して状態系列を最尤推定
 
+    print("Predict関数の出力")
     print("サンプルの観測系列からmodelにおける最尤状態遷移系列を復号します")
     print("{:*^10}".format("復号結果"))
     ans_cnt = 0
@@ -185,6 +187,7 @@ def Estimate(model,X1,Z1):
        
     # fitメソッドに観測系列を渡してパラメータを推定
     # modelから10000日分の出力を観測系列として学習する
+    print("Estimate関数の出力")
     print("modelからの出力10000日分の観測系列をremodelで学習します")
     remodel.fit(model.sample(10000)[0])
     # 学習済みのremodelに関して
