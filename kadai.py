@@ -190,7 +190,7 @@ def Estimate(model,X1,Z1):
     # modelから10000日分の出力を観測系列として学習する
     #print("modelからの出力10000日分の観測系列をremodelで学習します")
     print("統計情報の観測系列からremodelを学習します")
-    remodel.fit(model.sample(10000)[0])
+    remodel.fit(np.load("統計データ.npz")["x"])
     #remodelに入れる観測系列が決まったら更新すること
 
     # 学習済みのremodelに関して
